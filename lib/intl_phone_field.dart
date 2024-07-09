@@ -249,6 +249,9 @@ class IntlPhoneField extends StatefulWidget {
   /// If null, default magnification configuration will be used.
   final TextMagnifierConfiguration? magnifierConfiguration;
 
+  /// Hide the country picker dialog.
+  final bool? hideCountryPicker;
+
   const IntlPhoneField({
     Key? key,
     this.formFieldKey,
@@ -296,6 +299,7 @@ class IntlPhoneField extends StatefulWidget {
     this.pickerDialogStyle,
     this.flagsButtonMargin = EdgeInsets.zero,
     this.magnifierConfiguration,
+    this.hideCountryPicker,
   }) : super(key: key);
 
   @override
@@ -400,7 +404,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       onFieldSubmitted: widget.onSubmitted,
       magnifierConfiguration: widget.magnifierConfiguration,
       decoration: widget.decoration.copyWith(
-        prefixIcon: _buildFlagsButton(),
+        prefixIcon: widget.hideCountryPicker == true ? null : _buildFlagsButton(),
         counterText: !widget.enabled ? '' : null,
       ),
       style: widget.style,
@@ -436,7 +440,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
 
         return validatorMessage;
       },
-      maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
+      // maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       enabled: widget.enabled,
